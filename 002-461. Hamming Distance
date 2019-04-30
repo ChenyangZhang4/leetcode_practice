@@ -8,16 +8,13 @@ Note:
 0 ≤ x, y < 2^31
 **********/
 
-class Solution {
-public:
-    int hammingDistance(int x, int y) {
-        int n=0;
-        while((x!=0)||(y!=0)){
-            if((x%2)!=(y%2))
-                n++;
-            x/=2;
-            y/=2;
-        }
-        return n;
+int hammingDistance(int x, int y) {
+    int n=0;
+    while((x!=0)||(y!=0)){
+        if((x%2)!=(y%2))
+            n++;
+        x>>=1;
+        y>>=1;
     }
-};
+    return n;
+}
