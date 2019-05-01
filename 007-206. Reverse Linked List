@@ -1,0 +1,21 @@
+/**********
+206. Reverse Linked List
+
+Reverse a singly linked list.
+**********/
+
+ListNode* reverseList(ListNode* head) {
+    if(!head)
+        return NULL;
+    ListNode* reverseHead = NULL;
+    ListNode* temp;
+    while(head){
+        temp = head->next;
+        head->next = reverseHead;
+        reverseHead = head;
+        head = temp;
+    }
+    return reverseHead;
+}
+
+//Recursive solution need to creat a function with two parameters.
