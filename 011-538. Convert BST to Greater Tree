@@ -1,0 +1,40 @@
+/**********
+538. Convert BST to Greater Tree
+
+Given a Binary Search Tree (BST), convert it to a Greater Tree such that every key of the original BST is changed to 
+the original key plus sum of all keys greater than the original key in BST.
+**********/
+
+//Change order: left, root, left 
+int SumOfTree(TreeNode* root){
+    if(!root)
+        return 0;
+    int left = SumOfTree(root->left);
+    int right = SumOfTree(root->right);
+    return root->val + left + right;
+}
+void ChangeTree(TreeNode* root, int &sum){
+    if(!root)
+        return;
+    ChangeTree(root->left, sum);
+    sum -= root->val;
+    root->val += sum;
+    ChangeTree(root->right, sum);
+}
+TreeNode* convertBST(TreeNode* root) {
+    int sum = SumOfTree(root);
+    ChangeTree(root, sum);
+    return root;
+}
+
+//Recommended. Change order: right(Be careful), root, left
+int accum = 0;  //assume they are in a class.
+TreeNode* convertBST(TreeNode* root) {
+    if (!root)
+        return NULL;
+    convertBST(root->right);
+    accum += root->val;
+    root->val = accum;
+    convertBST(root->left);
+    return root;
+}
