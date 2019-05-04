@@ -7,32 +7,75 @@ length of the longest path between any two nodes in a tree. This path may or may
 Note:The length of path between two nodes is represented by the number of edges between them.
 **********/
 
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
-class Solution {
-public:
-    int diameterOfBinaryTree(TreeNode* root) {
-        if(root){
-            int a = depth(root->left) + depth(root->right);
-            int b = diameterOfBinaryTree(root->left);
-            int c = diameterOfBinaryTree(root->right);
-            return max(max(a, b), c);
-        }
-        return 0;
+//Simple solution
+int depth(TreeNode* root){
+    if(root){
+        int a = depth(root->left);
+        int b = depth(root->right);
+        return 1 + (a<b?b:a);       //Using max(a,b) will time out, and remeber to bracket it
     }
-    int depth(TreeNode* root){
-        if(root){
-            int a = depth(root->left);
-            int b = depth(root->right);
-            return 1 + (a<b?b:a);
-        }
-        return 0;
+    return 0;
+}
+int diameterOfBinaryTree(TreeNode* root) {
+    if(root){
+        int a = depth(root->left) + depth(root->right);
+        int b = diameterOfBinaryTree(root->left);
+        int c = diameterOfBinaryTree(root->right);
+        return max(max(a, b), c);
     }
-};
+    return 0;
+}
+
+//use map to avoid repeated calculation
+unordered_map<TreeNode*, int> heights;
+void findheight(TreeNode* root) {
+    if(heights.find(root)!=heights.end())    
+        return;
+    if(root->left == NULL && root->right == NULL){
+        heights[root] = 0; return;
+    }
+    int h =0; 
+    if(root->left){
+        findheight(root->left);
+        h = max(h,heights[root->left]);
+    }
+    if(root->right){
+        findheight(root->right);
+        h = max(h,heights[root->right]);
+    }
+    heights[root] = h+1;
+}
+int diameterOfBinaryTree(TreeNode* root) {
+    if(root == NULL)    
+        return 0;
+    findheight(root);
+    int diameter  = 0;
+    for(auto it = heights.begin(); it!=heights.end(); it++){
+        int d=0;
+        TreeNode* node=it->first;
+        if(node->left){
+            d = d+heights[node->left]+1;
+        }
+        if(node->right){
+            d = d+heights[node->right]+1;
+        }
+        diameter = max(diameter,d);
+    }
+    return diameter;
+}
+
+//Recommended! Fastest. Passing in additional parameter to record max value;
+int getDiameter(TreeNode *root, int& maxVal){
+    if(root == NULL) 
+        return 0;
+    int left = getDiameter(root->left, maxVal);
+    int right = getDiameter(root->right, maxVal);
+    maxVal = max(maxVal, left+right);
+    return 1+max(left, right);
+}
+int diameterOfBinaryTree(TreeNode* root) {
+    if(root == NULL) return 0;
+    int maxVal = 0;
+    getDiameter(root, maxVal);
+    return maxVal;
+}
