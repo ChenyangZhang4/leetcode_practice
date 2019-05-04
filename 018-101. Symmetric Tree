@@ -1,0 +1,20 @@
+/**********
+101. Symmetric Tree
+
+Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+**********/
+
+bool IsSymHelper(TreeNode* p1, TreeNode* p2){
+    if(!p1 && !p2)
+        return true;
+    if(!p1 || !p2)
+        return false;
+    if(p1->val == p2->val)
+        return IsSymHelper(p1->left, p2->right) && IsSymHelper(p1->right, p2->left);
+    return false;
+}
+bool isSymmetric(TreeNode* root) {
+    if(!root)
+        return true;
+    return IsSymHelper(root->left, root->right);
+}
