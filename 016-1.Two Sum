@@ -1,0 +1,38 @@
+/**********
+1. Two Sum
+
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+**********/
+
+//144ms solution
+vector<int> twoSum(vector<int>& nums, int target) {
+    vector<int> res;
+    for(int i=0; i<nums.size(); i++){
+        for(int j=i+1; j<nums.size(); j++){
+            if(nums[i]+nums[j]==target){
+                res.push_back(i);
+                res.push_back(j);
+                return res;
+            }
+        }
+    }
+    return res;
+}
+
+//Recommended! 12ms solution. The find() of nordered_map is efficient.
+vector<int> twoSum(vector<int>& nums, int target) {
+    vector<int> result;
+    unordered_map<int, int> numMap; 
+    for (std::size_t i = 0; i < nums.size(); ++i) {
+        auto it = numMap.find(target - nums[i]);
+        if (it != numMap.end()) {
+            result.push_back(it->second);
+            result.push_back(i);
+            break;
+        }
+        numMap.insert(std::make_pair(nums[i], i));
+    }
+    return result;
+}
