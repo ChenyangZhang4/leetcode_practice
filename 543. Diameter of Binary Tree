@@ -70,11 +70,12 @@ int getDiameter(TreeNode *root, int& maxVal){
         return 0;
     int left = getDiameter(root->left, maxVal);
     int right = getDiameter(root->right, maxVal);
-    maxVal = max(maxVal, left+right);
+    maxVal = max(maxVal, left+right);       //using max() here is as fast as a>b?a:b
     return 1+max(left, right);
 }
 int diameterOfBinaryTree(TreeNode* root) {
-    if(root == NULL) return 0;
+    if(root == NULL) 
+        return 0;
     int maxVal = 0;
     getDiameter(root, maxVal);
     return maxVal;
