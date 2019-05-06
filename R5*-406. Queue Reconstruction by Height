@@ -1,0 +1,53 @@
+/**********
+406. Queue Reconstruction by Height
+
+Suppose you have a random list of people standing in a queue. Each person is described by a pair of integers (h, k), where h is the height of the person and k is the number of people in front of this person who have a height greater than or equal to h. Write an algorithm to reconstruct a queue to confirm the rule.
+
+Note:
+The number of people is less than 1,100.
+**********/
+
+//112ms
+static bool Cmp(vector<int> v1, vector<int> v2){
+    if(v1[0]<v2[0])
+        return true;
+    else if(v1[0]>v2[0])
+        return false;
+    else{
+        if(v1[1]<v2[1])
+            return true;
+        else
+            return false;
+    }
+}
+vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+    sort(people.begin(), people.end(), Cmp);
+    vector<vector<int> > res(people.size(), vector<int>(2,-1));
+    for(int i=0; i<people.size(); i++){
+        int j=0, k=0;
+        while(k!=people[i][1]){
+            j++;
+            if(res[j-1][0]==-1 || res[j-1][0]==people[i][0])
+                k++;
+        }
+        while(res[j][0]!=-1)
+            j++;
+        res[j]=people[i];
+    }
+    return res;
+}
+
+//32ms, ???
+vector<pair<int, int>> reconstructQueue(vector<pair<int, int>>& people) {
+    typedef pair<int,int> Pair;
+    sort(people.begin(),people.end(),[](Pair a,Pair b){return a.first==b.first?a.second>b.second:a.first<b.first;});
+    vector<int> v;
+    for(int i=0;i<people.size();++i) 
+        v.push_back(i);
+    vector<Pair> res(people.size(),{0,0});
+    for(int i=0;i<people.size();++i){
+        res[v[people[i].second]] = people[i];
+        v.erase(v.begin()+people[i].second);
+    }
+    return res;
+}
