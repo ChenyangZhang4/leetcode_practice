@@ -1,0 +1,23 @@
+/**********
+46. Permutations
+
+Given a collection of distinct integers, return all possible permutations.
+**********/
+
+void permuteHelper(vector<vector<int> > &res, vector<int> &nums, int i){
+    if(i==nums.size()-1){
+        res.push_back(nums);
+        return;
+    }   
+    for(int j=i; j<nums.size(); j++){
+        swap(nums[i], nums[j]);
+        permuteHelper(res, nums, i+1);
+        swap(nums[i], nums[j]);
+    }
+}
+vector<vector<int>> permute(vector<int>& nums) {
+    vector<vector<int> > res;
+    sort(nums.begin(), nums.end());
+    permuteHelper(res, nums, 0);
+    return res;
+}
