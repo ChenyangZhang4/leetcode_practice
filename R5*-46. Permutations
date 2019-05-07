@@ -4,6 +4,7 @@
 Given a collection of distinct integers, return all possible permutations.
 **********/
 
+//12ms
 void permuteHelper(vector<vector<int> > &res, vector<int> &nums, int i){
     if(i==nums.size()-1){
         res.push_back(nums);
