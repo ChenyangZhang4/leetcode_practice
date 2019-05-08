@@ -1,0 +1,22 @@
+/**********
+22. Generate Parentheses
+
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+**********/
+
+//0ms. No redundancy.
+void Helper(vector<string> &res, int left, int right, string s){
+    if(!left && !right){
+        res.push_back(s);
+        return;
+    }
+    if(left)
+        Helper(res, left-1, right, s+"(");
+    if(left<right)                              //take care.
+        Helper(res, left, right-1, s+")");
+}
+vector<string> generateParenthesis(int n) {
+    vector<string> res;
+    Helper(res, n, n, "");
+    return res;
+}
