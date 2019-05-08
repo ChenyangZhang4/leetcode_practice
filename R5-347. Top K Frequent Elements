@@ -1,0 +1,28 @@
+/**********
+347. Top K Frequent Elements
+
+Given a non-empty array of integers, return the k most frequent elements.
+
+Note:
+You may assume k is always valid, 1 ≤ k ≤ number of unique elements.
+Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
+**********/
+
+//24ms
+//sort(v.begin(), v.end(), [](pair<int, int> a, pair<int, int> b){return a.second>b.second;}) is equal.
+static bool Cmp(pair<int, int> a, pair<int, int> b){
+    return a.second > b.second;
+}
+vector<int> topKFrequent(vector<int>& nums, int k) {
+    map<int, int> m;
+    for(int i=0; i<nums.size(); i++){
+        m[nums[i]]++;
+    }
+    vector<pair<int, int> > v(m.begin(), m.end());
+    sort(v.begin(), v.end(), Cmp);
+    vector<int> res;
+    for(int i=0; i<k; i++){
+        res.push_back(v[i].first);
+    }
+    return res;
+}
