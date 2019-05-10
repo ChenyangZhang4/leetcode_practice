@@ -1,0 +1,33 @@
+/**********
+102. Binary Tree Level Order Traversal
+
+Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+**********/
+
+//8ms
+vector<vector<int>> levelOrder(TreeNode* root) {
+    vector<vector<int>> res;
+    if(!root)
+        return res;
+    queue<TreeNode*> q;
+    int curLevelN;
+    q.push(root);
+    TreeNode* temp;
+    vector<int> v;
+    while(!q.empty()){
+        curLevelN = q.size();
+        v.clear();
+        while(curLevelN!=0){
+            temp = q.front();
+            q.pop();
+            v.push_back(temp->val);
+            curLevelN--;
+            if(temp->left)
+                q.push(temp->left);
+            if(temp->right)
+                q.push(temp->right);
+        }
+        res.push_back(v);
+    }
+    return res;
+}
