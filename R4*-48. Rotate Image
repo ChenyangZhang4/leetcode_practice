@@ -1,0 +1,69 @@
+/**********
+48. Rotate Image
+
+You are given an n x n 2D matrix representing an image.
+
+Rotate the image by 90 degrees (clockwise).
+
+Note:
+You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
+**********/
+
+//Recommended! 4ms， change 4 numbers once. Clearer.
+void rotate(vector<vector<int>>& matrix) {
+    if (matrix.empty())
+        return;
+    int sr = 0, sc = 0, tr = matrix.size() - 1, tc = matrix.size() - 1;
+    while (sr < tr) {
+        for (int delta = 0; delta < (tr - sr); delta++) {
+            int temp = matrix[tr - delta][sc];
+            matrix[tr - delta][sc] = matrix[tr][tc - delta];
+            matrix[tr][tc - delta] = matrix[sr + delta][tc];
+            matrix[sr + delta][tc] = matrix[sr][sc + delta];
+            matrix[sr][sc + delta] = temp;
+        }
+        sr++; sc++;
+        tr--; tc--;
+    }
+}
+
+//4ms, change L-1 numbers once
+void rotate(vector<vector<int>>& matrix) {
+    int n=matrix.size();
+    vector<int> temp;
+    int L, j;
+    for(int i=0; i<n/2; i++){
+        L = n-2*i;
+        temp.clear();
+        for(j=0; j<L; j++){
+            temp.push_back(matrix[i][i+j]);
+        }
+        for(j=0; j<L-1; j++){
+            matrix[i][n-1-i-j] = matrix[i+j][i];
+        }
+        for(j=0; j<L-1; j++){
+            matrix[i+j][i] = matrix[n-1-i][i+j];
+        }
+        for(j=0; j<L-1; j++){
+            matrix[n-1-i][i+j] = matrix[n-1-i-j][n-1-i];
+        }
+        for(j=0; j<L-1; j++){
+            matrix[n-1-i-j][n-1-i] = temp[L-1-j];
+        }
+    }
+}
+
+//8ms, use rule
+void rotate(vector<vector<int>>& matrix) {
+    if (matrix.size() == 0 || matrix.size() == 1) {
+        return;
+    }
+    reverse(matrix.begin(), matrix.end());
+    for (int i = 0; i < matrix.size(); i++) {
+        for (int j = i+1; j < matrix[i].size(); j++) {
+            int temp = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = temp;
+        }
+    }
+}
