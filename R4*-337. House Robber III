@@ -1,0 +1,60 @@
+/**********
+337. House Robber III
+
+The thief has found himself a new place for his thievery again. There is only one entrance to this area, called the "root." Besides the root, each house has one and only one parent house. After a tour, the smart thief realized that "all houses in this place forms a binary tree". It will automatically contact the police if two directly-linked houses were broken into on the same night.
+
+Determine the maximum amount of money the thief can rob tonight without alerting the police.
+**********/
+
+//8ms
+pair<int, int> opt(TreeNode *t) {
+    if (t == NULL) 
+        return pair(0,0);
+    pair<int, int> L = opt(t->left);
+    pair<int, int> R = opt(t->right);
+    pair<int, int> ret;
+    ret.first = L.second + R.second + t->val;
+    ret.second = max(L.first, L.second) + max(R.first, R.second);
+    return ret;
+}
+int rob(TreeNode* root) {
+    pair<int, int> ans = opt(root);
+    return max(ans.first, ans.second);
+}
+
+//24ms
+int robSubtree(TreeNode* root, unordered_map<TreeNode*, int>& m) {
+    if (!root)
+        return 0;
+    if (m.find(root) != m.end())
+        return m[root];
+    int val = 0;
+    if (root->left) {
+        val += robSubtree(root->left->left, m) + robSubtree(root->left->right, m);
+    }
+    if (root->right) {
+        val += robSubtree(root->right->left, m) + robSubtree(root->right->right, m);
+    }
+    val = max(val + root->val, robSubtree(root->left, m) + robSubtree(root->right, m));
+    m[root] = val;
+    return val;
+}
+int rob(TreeNode* root) {
+    unordered_map<TreeNode*, int> m;
+    return robSubtree(root, m);
+}
+
+//1024ms
+int robHelper(TreeNode* root, bool flag){
+    if(!root)
+        return 0;
+    if(flag){
+        int a = root->val + robHelper(root->left, false) + robHelper(root->right, false);
+        int b = robHelper(root->left, true) + robHelper(root->right, true);
+        return a>b?a:b;
+    }
+    return robHelper(root->left, true) + robHelper(root->right, true);
+}
+int rob(TreeNode* root) {
+    return robHelper(root, true);
+}
