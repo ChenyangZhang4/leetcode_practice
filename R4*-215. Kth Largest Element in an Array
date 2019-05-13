@@ -1,0 +1,61 @@
+/**********
+215. Kth Largest Element in an Array
+
+Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.
+**********/
+
+//12ms
+int findKthLargest(vector<int>& nums, int k) {
+    sort(nums.begin(), nums.end(), greater<int>());
+    return nums[k - 1];
+}
+
+//12ms
+int findKthLargest(vector<int>& nums, int k) {
+    priority_queue<int> q;
+    for (const int& v : nums) {
+        q.push(v);
+        if (q.size() > nums.size() - k + 1)
+            q.pop();
+    }
+    return q.top();
+}
+
+//12ms
+void swap(int i, int j, vector<int>& nums){
+    int temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
+}
+void heapify(vector<int>& nums,int mid,int size){
+    while(mid<size){
+        int largest = mid;
+        int left = mid*2+1;
+        int right=mid*2+2;
+        if(left<size && nums[left]>nums[largest]){
+            largest = left;
+        }
+        if(right<size && nums[right]>nums[largest]){
+            largest = right;
+        }
+        if(mid!=largest){
+            swap(mid,largest,nums);
+            mid = largest;
+        }else{
+            break;
+        }
+    }
+}
+int findKthLargest(vector<int>& nums, int k) {
+    int count =0;
+    for(int i = nums.size()/2-1;i>=0;--i){
+        heapify(nums,i,nums.size());
+    }
+    if(k==1)
+        return nums[0];
+    for(int i=nums.size()-1;i>nums.size()-k;--i){
+        swap(0,i,nums);
+        heapify(nums,0,i);
+    }
+    return nums[0];
+}
