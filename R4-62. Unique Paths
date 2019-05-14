@@ -1,9 +1,11 @@
 /**********
-1. Two Sum
+62. Unique Paths
 
-Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
 
-You may assume that each input would have exactly one solution, and you may not use the same element twice.
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid.
+
+How many possible unique paths are there?
 **********/
 
 //0ms
