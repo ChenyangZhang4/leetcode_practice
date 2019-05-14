@@ -1,0 +1,57 @@
+/**********
+399. Evaluate Division
+
+Equations are given in the format A / B = k, where A and B are variables represented as strings, and k is a real number (floating point number). Given some queries, return the answers. If the answer does not exist, return -1.0.
+
+Example:
+Given a / b = 2.0, b / c = 3.0.
+queries are: a / c = ?, b / a = ?, a / e = ?, a / a = ?, x / x = ? .
+return [6.0, 0.5, -1.0, 1.0, -1.0 ].
+
+The input is: vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> queries , where equations.size() == values.size(), and the values are positive. This represents the equations. Return vector<double>.
+**********/
+
+//0ms, build a graph.
+void DFS(unordered_map<string, vector<pair<string, double>>> &graph, string s, string e, bool &found, vector<double> &ret, double &val, unordered_set<string> &path) {
+    path.insert(s); 
+    if (graph.find(s) == graph.end())
+        return;
+    if (found)      
+        return;
+    for (auto i : graph[s]) {
+        if (path.find(i.first) != path.end())
+            continue;
+        val *= i.second;
+        if (i.first == e) {
+            ret.push_back(val);
+            found = true;
+            return;
+        }
+        DFS(graph, i.first, e, found, ret, val, path);
+        val /= i.second;
+    }
+} 
+vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+    unordered_map<string, vector<pair<string, double>>> graph;  //build a graph
+    for (int i = 0; i<equations.size(); i++) {
+        graph[equations[i][0]].push_back({ equations[i][1], values[i] });
+        graph[equations[i][1]].push_back({ equations[i][0], 1 / values[i] });
+    }
+    vector<double> ret;
+    unordered_set<string> path;     //a hash set for quick finding
+    for (int i = 0; i<queries.size(); i++) {
+        if (graph.find(queries[i][0]) == graph.end() || graph.find(queries[i][1]) == graph.end())
+            ret.push_back(-1.0);
+        else if (queries[i][0] == queries[i][1])
+            ret.push_back(1.0);
+        else {
+            double val = 1.0;
+            bool found = false;     //if found, stop recursion.
+            path.clear();
+            DFS(graph, queries[i][0], queries[i][1], found, ret, val, path);
+            if(!found)              //even start and end is valid, it is possible that no way
+                ret.push_back(-1.0);
+        }
+    }
+    return ret;
+}
