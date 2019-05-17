@@ -1,0 +1,51 @@
+/**********
+155. Min Stack
+
+Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+**********/
+
+//28ms
+class MinStack {
+public:
+    stack<int> s, sMin;   //need a stack to remember min value, not a int.
+    void push(int x) {
+        if(s.empty() || sMin.top()>x)   //take care of here
+            sMin.push(x);
+        else
+            sMin.push(sMin.top());
+        s.push(x);
+    }
+    void pop() {
+        s.pop();
+        sMin.pop();
+    }
+    int top() {
+        return s.top();
+    }
+    int getMin() {
+        return sMin.top();
+    }
+};
+
+//Save more space.
+class MinStack {
+public:
+    stack<int> s;
+    stack<int> minStack;
+    void push(int x) {
+        s.push(x);
+        if (minStack.empty() || x <= minStack.top())
+            minStack.push(x);
+    }
+    void pop() {
+        if (minStack.top() == s.top())
+            minStack.pop();
+        s.pop();
+    }
+    int top() {
+        return s.top();
+    }
+    int getMin() {
+        return minStack.top();
+    }
+};
