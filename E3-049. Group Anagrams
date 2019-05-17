@@ -1,0 +1,33 @@
+/**********
+49. Group Anagrams
+
+Given an array of strings, group anagrams together.
+
+Example:
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+Output:
+[
+  ["ate","eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]
+
+Note:
+All inputs will be in lowercase.
+The order of your output does not matter.
+**********/
+
+//40ms
+vector<vector<string>> groupAnagrams(vector<string>& strs) {
+    std::unordered_map<std::string, std::vector<std::string>> mp;
+    for (const std::string& s : strs) {
+        std::string a = s;
+        std::sort(a.begin(), a.end());
+        mp[a].push_back(s);
+    }
+    std::vector<std::vector<std::string>> res;
+    for (const auto& p : mp) {
+        res.push_back(p.second);
+    }
+    return res;
+}
