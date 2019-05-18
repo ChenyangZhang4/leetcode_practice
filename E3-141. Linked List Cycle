@@ -1,0 +1,38 @@
+/**********
+141. Linked List Cycle
+
+Given a linked list, determine if it has a cycle in it.
+**********/
+
+//16ms
+bool hasCycle(ListNode *head) {
+    if(!head || head->next==NULL)
+        return false;
+    ListNode* low = head->next;
+    ListNode* fast = head->next->next;
+    while(low != fast){
+        if(fast==NULL || fast->next==NULL){
+            return false;
+        }
+        low = low->next;
+        fast = fast->next->next;
+    }
+    return true;
+}
+
+//8ms
+bool hasCycle(ListNode *head) {
+    ListNode *fastPtr=head, *slowPtr=head;
+
+    while(fastPtr!=nullptr) {
+        fastPtr = fastPtr->next;
+        slowPtr = slowPtr->next;
+        if(fastPtr==nullptr) 
+            return false;
+        else 
+            fastPtr = fastPtr->next;
+        if(fastPtr == slowPtr) 
+            return true;
+    }
+    return false;
+}
