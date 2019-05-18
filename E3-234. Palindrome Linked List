@@ -1,0 +1,52 @@
+/**********
+234. Palindrome Linked List
+
+Given a singly linked list, determine if it is a palindrome.
+**********/
+
+//28ms. O(n) time and O(n) space.
+bool isPalindrome(ListNode* head) {
+    if(!head)
+        return true;
+    ListNode* temp = head;
+    vector<int> v;
+    while(temp){
+        v.push_back(temp->val);
+        temp = temp->next;
+    }
+    for(int i=0, j=v.size()-1; i<j; i++, j--){
+        if(v[i]!=v[j])
+            return false;
+    }
+    return true;
+}
+
+//20ms. O(n) time and O(1) space, but it need change the list.
+bool isPalindrome(ListNode* head) {
+    int c = 0;
+    ListNode * h = head;
+    while(h){
+        c++; 
+        h = h->next;
+    }
+    ListNode* mid = head;
+    c/=2;
+    while(c--){
+        mid = mid->next;
+    }
+    ListNode* hh = nullptr;
+    while(mid){
+        ListNode* next = mid->next;
+        mid->next = hh;
+        hh = mid;
+        mid = next;
+    }
+    h = head;
+    while(hh){
+        if (h->val != hh->val) {
+            return false;
+        }
+        h = h->next;hh = hh->next;
+    }
+    return true;
+}
