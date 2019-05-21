@@ -1,0 +1,53 @@
+/**********
+160. Intersection of Two Linked Lists
+
+Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+**********/
+
+//44ms. The length of A+B is equal to the length of B+A.
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    if (!headA || !headB) 
+        return NULL;
+    ListNode* A = headA;
+    ListNode* B = headB;
+    while (A != B) {
+        A = A ? A->next : headB;
+        B = B ? B->next : headA;
+    }
+    return A;       //if without intersection, A will be NULL;
+}
+
+//52ms
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    if(!headA || !headB)
+        return NULL;
+    int lenA=0, lenB=0;
+    ListNode *temp1=headA, *temp2=headB;
+    while(temp1){
+        temp1 = temp1->next;
+        lenA++;
+    }
+    while(temp2){
+        temp2 = temp2->next;
+        lenB++;
+    }
+    int dif = lenA - lenB;
+    if(dif>0){
+        temp1 = headA;
+        temp2 = headB;
+    }
+    else{
+        dif*=-1;
+        temp1 = headB;
+        temp2 = headA;
+    }
+    while(dif){
+        temp1 = temp1->next;
+        dif--;
+    }
+    while(temp1 != temp2){
+        temp1 = temp1->next;
+        temp2 = temp2->next;
+    }
+    return temp1;
+}
