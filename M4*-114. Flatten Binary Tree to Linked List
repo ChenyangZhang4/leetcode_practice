@@ -1,0 +1,28 @@
+/**********
+114. Flatten Binary Tree to Linked List
+
+Given a binary tree, flatten it to a linked list in-place.
+**********/
+
+//4ms, the problem needs the left value of each node is NULL.
+TreeNode* flattenHelper(TreeNode* root){
+    TreeNode* l = root->left;
+    TreeNode* r = root->right;
+    TreeNode* last = root;
+    if(l){
+        last->right = l;
+        last->left = NULL;
+        last = flattenHelper(l);
+    }
+    if(r){
+        last->right = r;
+        last->left = NULL;
+        last = flattenHelper(r);
+    }
+    return last;
+}
+void flatten(TreeNode* root) {
+    if(!root)
+        return;
+    flattenHelper(root);
+}
