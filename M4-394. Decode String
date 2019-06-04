@@ -1,0 +1,72 @@
+/**********
+394. Decode String
+
+Given an encoded string, return it's decoded string.
+
+The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
+
+You may assume that the input string is always valid; No extra white spaces, square brackets are well-formed, etc.
+
+Furthermore, you may assume that the original data does not contain any digits and that digits are only for those repeat numbers, k. For example, there won't be input like 3a or 2[4].
+**********/
+
+//4ms
+string decodeString(string s) {
+    stack<char> st;
+    for(char &c: s){
+        if(c==']'){
+            string temp;
+            while(st.top()!='['){
+                temp+=st.top();
+                st.pop();
+            }
+            reverse(temp.begin(), temp.end());
+            st.pop();
+            int k=0;
+            int carry=1;
+            while(!st.empty() && st.top()>='0' && st.top()<='9'){
+                k += carry*(st.top()-'0');
+                st.pop();
+                carry*=10;
+            }
+            while(k){
+                for(char &a: temp)
+                    st.push(a);
+                k--;
+            }
+        }
+        else
+            st.push(c);
+    }
+    string ret;
+    while(!st.empty()){
+        ret += st.top();
+        st.pop();
+    }
+    reverse(ret.begin(), ret.end());
+    return ret;
+}
+
+//0ms
+string decodeString(string s) {
+    stack<pair<int, string>> S;
+    S.push({1,""});
+    int r=0;
+    for(int i=0; i<s.size(); ++i) {
+        if(isdigit(s[i]))
+            r = r*10 + s[i] - '0';
+        else if(isalpha(s[i]))
+            S.top().second.push_back(s[i]);
+        else if(s[i] == '[') {
+            S.push({r,""});
+            r=0;
+        }
+        else {
+            auto last = S.top();
+            S.pop();
+            while(last.first--)
+                S.top().second += last.second;
+        }
+    }
+    return S.top().second;
+}
