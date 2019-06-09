@@ -1,0 +1,13 @@
+/**********
+237. Delete Node in a Linked List
+
+Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
+**********/
+
+//4ms
+void deleteNode(ListNode* node) {
+    node->val = node->next->val;
+    ListNode *del = node->next;
+    node->next = node->next->next;
+    delete del;
+}
