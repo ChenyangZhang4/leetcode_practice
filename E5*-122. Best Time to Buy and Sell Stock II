@@ -1,0 +1,34 @@
+/**********
+122. Best Time to Buy and Sell Stock II
+
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).
+
+Note: You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).
+**********/
+
+//8ms
+//what actually it does is check if we can profit tomorrow if we buy today, if so we buy in otherwise we do not and the smallest interval is day so checking each day will bring us the maximal profit.
+//suppose we will get the maximal profit with two transactions separated away from each other than one neighbour. Suppose a3-a1 is maximal profit for price a1, a2 and a3. If a1<a2<a3, a3-a1 = a3-a2+a2-a1. If a2<a1<a3, a3-a1 < a3-a2. If a1<a3<a2, a3-a1 < a2-a1.
+int maxProfit(vector<int>& prices) {
+    if(prices.size()<=1)
+        return 0;
+    int ret=0;
+    for(int i=0; i<prices.size()-1; i++){
+        if(prices[i]<prices[i+1])
+            ret += prices[i+1]-prices[i];
+    }
+    return ret;
+}
+
+//4ms
+int maxProfit(vector<int>& price) {
+    int p=0;
+    for(int j=1;j<price.size();j++)
+    {
+        if(price[j-1]<price[j])
+            p+=(price[j]-price[j-1]);
+    } 
+    return p;
+}
