@@ -1,0 +1,29 @@
+/**********
+371. Sum of Two Integers
+
+Calculate the sum of two integers a and b, but you are not allowed to use the operator + and -.
+
+Example 1:
+Input: a = 1, b = 2
+Output: 3
+
+Example 2:
+Input: a = -2, b = 3
+Output: 1
+**********/
+
+//0ms. Be carefull that a negative value can not left shift.
+int getSum(int a, int b) {
+    long long carry;
+    while(b!=0){
+        carry = a&b;
+        a = a^b;
+        b = (carry&0xFFFFFFFF)<<1;      //it makes b never be a negative value. Without it, getSum(-1, 1) cause an error.
+    }
+    return a;
+}
+
+//another solution
+int getSum(int a, int b) {
+    return b == 0 ? a : getSum(a ^ b, (a & b & 0x7fffffff) << 1);
+}
