@@ -1,0 +1,84 @@
+/**********
+118. Pascal's Triangle
+
+Given a non-negative integer numRows, generate the first numRows of Pascal's triangle.
+
+Example:
+
+Input: 5
+Output:
+[
+     [1],
+    [1,1],
+   [1,2,1],
+  [1,3,3,1],
+ [1,4,6,4,1]
+]
+**********/
+
+//4ms
+vector<vector<int>> generate(int numRows) {
+    vector<vector<int>> ret;
+    if(numRows==0)
+        return ret;
+    vector<int> up(1,1), cur;
+    ret.push_back(vector<int>(1,1));
+    int i=2;
+    while(i<=numRows){
+        cur.push_back(1);
+        for(int k=0; k<up.size()-1; k++){
+            cur.push_back(up[k]+up[k+1]);
+        }
+        cur.push_back(1);
+        ret.push_back(cur);
+        swap(cur, up);
+        cur.clear();
+        i++;
+    }
+    return ret;
+}
+
+//0ms. Use the element of return vector.
+vector<vector<int>> generate(int numRows) {
+    vector<vector<int>> pas;
+    for (int i=0; i < numRows; i++){
+        vector<int> row;
+        int items = i+1;
+        if (i==0) {
+            row.push_back(1);
+            pas.push_back(row);
+            continue;                
+        }
+        if (i==1){
+            row.push_back(1);
+            row.push_back(1);
+            pas.push_back(row);
+            continue;
+        }
+        row.push_back(1);
+        for (int j=1; j<items-1; j++){
+            int val = pas[i-1][j-1]+pas[i-1][j];
+            row.push_back(val);
+        }
+        row.push_back(1);
+        pas.push_back(row);
+    }
+    return pas;
+}
+
+//4ms. Use rule of the numbers.
+vector<vector<int>> generate(int r) {
+    vector<vector<int>> ans;
+    vector<int>v;
+    int i,j;
+    for(i=1;i<=r;i++){
+            int p=1;
+        for(j=1;j<=i;j++){
+            v.push_back(p);
+            p=p*(i-j)/j;
+        }
+        ans.push_back(v);
+        v.clear();
+    }
+    return ans;
+}
