@@ -1,0 +1,27 @@
+/**********
+326. Power of Three
+
+Given an integer, write a function to determine if it is a power of three.
+**********/
+
+//24ms. Simple way.
+bool isPowerOfThree(int n) {
+   if(n<0)
+       return 0;
+    while(n>1){
+        if(n%3)
+            return 0;
+        n /= 3;
+    }
+    return n;
+}
+
+//16ms. No loop.
+bool isPowerOfThree(int n) {
+    if(n<=0)
+        return false;
+    if((1162261467)%n == 0)
+        return true;
+    else
+        return false;
+ }
