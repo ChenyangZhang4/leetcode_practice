@@ -45,3 +45,11 @@ int mySqrt(int x){
 	}
 	return low * low > x ? low - 1 : low;
 }
+
+//4ms
+int mySqrt(int x) {
+	double y = x;
+	while(abs(-y + x / y) > 0.1)
+	    y = 0.5 * (y + x / y);
+	return (int)y * (int)y > x ? (int)y - 1 : (int)y;
+}
