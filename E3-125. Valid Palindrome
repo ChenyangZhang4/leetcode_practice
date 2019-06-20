@@ -1,0 +1,62 @@
+/**********
+125. Valid Palindrome
+
+Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+
+Note: For the purpose of this problem, we define empty string as valid palindrome.
+
+Example 1:
+Input: "A man, a plan, a canal: Panama"
+Output: true
+
+Example 2:
+Input: "race a car"
+Output: false
+**********/
+
+//8ms
+bool isPalindrome(string s) {
+    if(s=="")
+        return true;
+    int len = s.size();
+    for(int i=0; i<len; i++){
+        if(s[i]>='A' && s[i]<='Z'){
+            s[i] = 'a'+s[i]-'A';
+        }
+        else if(s[i]<'0' || (s[i]>'9' && s[i]<'a') || s[i]>'z'){
+            s[i] = '.';
+        }
+    }
+    int i=0, j=len-1;
+    while(i<j){
+        if(s[i]=='.'){
+            i++;
+            continue;
+        }
+        if(s[j]=='.'){
+            j--;
+            continue;
+        }
+        if(s[i]==s[j]){
+            i++;
+            j--;
+        }
+        else
+            return false;
+    }
+    return true;
+}
+
+//8ms
+bool isPalindrome(string s) {
+    int n = s.size();
+    if(s.empty())
+        return true;
+    for(int i = 0, j = n - 1; i < n && j >= 0 && i < j;){
+        while(i < n && !isalnum(s[i])) ++i;
+        while(j >= 0 && !isalnum(s[j])) --j;
+        if(i < n && j >= 0 && toupper(s[i++]) != toupper(s[j--]))
+            return false;
+    }
+    return true;
+}
