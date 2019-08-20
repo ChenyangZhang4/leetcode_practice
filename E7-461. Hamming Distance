@@ -7,7 +7,7 @@ Given two integers x and y, calculate the Hamming distance.
 Note:
 0 ≤ x, y < 2^31
 **********/
-
+# 4ms
 int hammingDistance(int x, int y) {
     int n=0;
     while((x!=0)||(y!=0)){
@@ -18,3 +18,8 @@ int hammingDistance(int x, int y) {
     }
     return n;
 }
+
+# 44ms
+class Solution:
+    def hammingDistance(self, x: int, y: int) -> int:
+        return bin(x ^ y).count('1')
