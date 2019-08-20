@@ -4,6 +4,7 @@
 Reverse a singly linked list.
 **********/
 
+// 8ms
 ListNode* reverseList(ListNode* head) {
     if(!head)
         return NULL;
@@ -19,3 +20,11 @@ ListNode* reverseList(ListNode* head) {
 }
 
 //Recursive solution need to creat a function with two parameters.
+
+# 64ms
+class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        pre = None
+        while head:
+            pre, head.next, head = head, pre, head.next
+        return pre
