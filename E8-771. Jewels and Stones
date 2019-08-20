@@ -10,6 +10,7 @@ Letters are case sensitive, so "a" is considered a different type of stone from 
 Note: S and J will consist of letters and have length at most 50. The characters in J are distinct.
 **********/
 
+// 4ms
 int numJewelsInStones(string J, string S) {
     int num = 0;
     for(int i=0; i<S.size(); i++) {
@@ -20,3 +21,13 @@ int numJewelsInStones(string J, string S) {
     }
     return num;
 }
+
+# 56ms
+def numJewelsInStones(self, J: str, S: str) -> int:
+    count = 0
+    for cS in S:
+        for cJ in J:
+            if cS == cJ:
+                count += 1
+                break
+    return count
