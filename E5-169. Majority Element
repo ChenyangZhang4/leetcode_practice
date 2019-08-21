@@ -6,6 +6,7 @@ Given an array of size n, find the majority element. The majority element is the
 You may assume that the array is non-empty and the majority element always exist in the array.
 **********/
 
+// 20ms
 int majorityElement(vector<int>& nums) {
     map<int, int> counts;
     int n = nums.size();
@@ -31,3 +32,34 @@ int majorityElement(vector<int>& nums) {
     }
     return res;
 }
+
+# 400ms
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        ret = 0
+        count = 0
+        for n in nums:
+            if count == 0:
+                ret = n
+                count = 1
+                continue
+            if ret == n:
+                count += 1
+            else:
+                count -= 1
+        return ret
+        
+# 60ms
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        d = dict()
+        for i in nums:
+            if i not in d:
+                d[i] = 1
+            else:
+                d[i] = d[i] + 1
+        res = 0
+        max_val = 0
+        for i in d:
+            if d[i] > len(nums)//2:
+                return i
