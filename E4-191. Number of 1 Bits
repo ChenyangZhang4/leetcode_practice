@@ -22,3 +22,6 @@ int hammingWeight(uint32_t n) {
     }
     return res;
 }
+
+# 28ms
+bin(n).count("1")
