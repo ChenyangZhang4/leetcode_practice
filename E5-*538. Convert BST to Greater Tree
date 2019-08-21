@@ -27,7 +27,7 @@ TreeNode* convertBST(TreeNode* root) {
     return root;
 }
 
-//Recommended. Change order: right(Be careful), root, left
+// 44ms. Recommended. Change order: right(Be careful), root, left
 int accum = 0;  //assume they are in a class.
 TreeNode* convertBST(TreeNode* root) {
     if (!root)
@@ -38,3 +38,32 @@ TreeNode* convertBST(TreeNode* root) {
     convertBST(root->left);
     return root;
 }
+
+# 76ms
+class Solution(object):
+    num = 0
+    def convertBST(self, root):
+        if root:
+            self.convertBST(root.right)
+            root.val += self.num
+            self.num = root.val
+            self.convertBST(root.left)
+            return root
+        return None
+        
+class Solution(object):
+    def convertBST(self, root):
+        if not root:
+            return root
+        stack = []
+        cur = root
+        sum = 0
+        while cur or stack:
+            while cur:
+                stack.append(cur)
+                cur = cur.right
+            cur = stack.pop(-1)
+            sum += cur.val
+            cur.val = sum
+            cur = cur.left
+        return root
