@@ -32,3 +32,12 @@ int maxProfit(vector<int>& price) {
     } 
     return p;
 }
+
+# 64ms
+class Solution(object):
+    def maxProfit(self, prices):
+        m=0
+        for i in range(0,len(prices)-1):
+            if prices[i]<prices[i+1]:
+                m+=prices[i+1]-prices[i]
+        return m
