@@ -48,3 +48,6 @@ bool isAnagram(string s, string t) {
     }
     return true;
 }
+
+# 92ms
+return sorted(s) == sorted(t)
