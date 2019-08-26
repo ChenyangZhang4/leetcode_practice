@@ -51,3 +51,16 @@ bool isHappy(int n) {
         sum = 0;
     }
 }
+
+# 28ms
+class Solution(object):
+    def isHappy(self, n):
+        n = str(n)
+        visited = set()
+        while 1:
+            n = str(sum(int(i) ** 2 for i in n))
+            if n == "1":
+                return True
+            if n in visited:
+                return False
+            visited.add(n)
