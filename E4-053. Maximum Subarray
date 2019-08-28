@@ -17,3 +17,14 @@ int maxSubArray(vector<int>& nums) {
     }
     return maxSum;
 }
+
+# 60ms
+class Solution(object):
+    def maxSubArray(self, nums):
+        if not nums: 
+            return 0
+        temp, dp = nums[0], 0
+        for num in nums:
+            dp = dp + num if dp > 0 else num
+            temp = max(temp, dp)
+        return temp
