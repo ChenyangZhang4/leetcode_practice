@@ -20,3 +20,17 @@ int climbStairs(int n) {
     }
     return ways;
 }
+
+#16ms
+def climbStairs(n):
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+    n1 = 1
+    n2 = 2
+    k = 3
+    while k <= n:
+        n1, n2 = n2, n1 + n2
+        k += 1
+    return n2
