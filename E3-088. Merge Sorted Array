@@ -41,3 +41,8 @@ void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
         }
     }
 }
+
+# 20ms
+def merge(nums1, m, nums2, n):
+    nums1[m:] = nums2
+    nums1.sort()
