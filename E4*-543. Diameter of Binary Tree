@@ -80,3 +80,18 @@ int diameterOfBinaryTree(TreeNode* root) {
     getDiameter(root, maxVal);
     return maxVal;
 }
+
+# 40ms
+class Solution(object):
+    def DFS(self, root):
+        if not root:
+            return 0
+        left = self.DFS(root.left)
+        right = self.DFS(root.right)
+        self.max_len = max(self.max_len, left+right)
+        return max(left, right) + 1
+    
+    def diameterOfBinaryTree(self, root):
+        self.max_len = 0
+        self.DFS(root)
+        return self.max_len
