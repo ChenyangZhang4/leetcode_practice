@@ -60,3 +60,35 @@ bool isPalindrome(string s) {
     }
     return true;
 }
+
+# 44ms
+def isPalindrome(s):
+    c=[]
+    for i in s:
+        if i.isalnum():
+            c.append(i.lower())
+    for j in range(len(c)/2):
+        if c[j] != c[len(c) - j - 1]:
+            return False
+    return True
+    
+def isPalindrome(s):
+    l,r=0,len(s)-1
+    while l<r:
+        if not s[l].isalnum():
+            l=l+1
+        elif not s[r].isalnum():
+            r=r-1
+        elif s[l].lower()==s[r].lower() :
+            l=l+1
+            r=r-1
+        else:
+             return False
+    return True
+    
+def isPalindrome(s):
+    if not s:
+        return True
+    s = s.lower()
+    s = re.findall("\w", s)
+    return s == s[::-1]
