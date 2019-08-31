@@ -35,3 +35,33 @@ vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
     }
     return ret;
 }
+
+# 44ms
+def intersect(nums1, nums2):
+    hashList = {}
+    for num in nums1:
+        hashList[num] = hashList.get(num, 0)+1
+    res = []
+    for num in nums2:
+        if num in hashList:
+            if hashList[num] != 0:
+                hashList[num] -= 1
+                res.append(num)
+        return res
+        
+def intersect(nums1, nums2):
+    nums1.sort()
+    nums2.sort()
+    ret = []
+    i = 0
+    j = 0
+    while i < len(nums1) and j < len(nums2):
+        if nums1[i] > nums2[j]:
+            j += 1
+        elif nums1[i] < nums2[j]:
+            i += 1
+        else:
+            ret.append(nums1[i])
+            i += 1
+            j += 1
+    return ret
