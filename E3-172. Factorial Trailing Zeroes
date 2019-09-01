@@ -24,3 +24,11 @@ int trailingZeroes(int n) {
     }
     return ret;
 }
+
+# 32ms
+def trailingZeroes(n):
+    ret = 0
+    while n:
+        n //= 5
+        ret += n
+    return ret
