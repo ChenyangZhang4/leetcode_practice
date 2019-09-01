@@ -36,3 +36,28 @@ vector<int> plusOne(vector<int>& digits) {
     }
     return digits;
 }
+
+# 20ms
+def plusOne(digits):
+    i = len(digits) - 1
+    carry = True
+    while i >= 0:
+        if carry:
+            if digits[i] <= 8:
+                digits[i] += 1
+                carry = False
+            elif digits[i] == 9 and i > 0:
+                digits[i] = 0
+            else:
+                digits[i] = 0
+                digits.insert(0, 1)
+            i -= 1
+        else:
+            return digits
+    return digits
+    
+def plusOne(digits):
+    x = [str(s) for s in digits]
+    r = int("".join(x))
+    r += 1
+    return [int(t) for t in str(r)]
