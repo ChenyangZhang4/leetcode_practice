@@ -40,3 +40,20 @@ bool isValid(string s) {
     else
         return false;
 }
+
+# 24ms
+def isValid(s):
+    stack = []
+    for c in s:
+        if c != ")" and c != "]" and c != "}":
+            stack.append(c)
+        else:
+            if c == ")":
+                want = "("
+            elif c == "]":
+                want = "["
+            else:
+                want = "{"
+            if not len(stack) or stack.pop() != want:
+                return False
+    return len(stack) == 0
