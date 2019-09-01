@@ -35,3 +35,9 @@ void rotate(vector<int>& nums, int k) {
     reverse(nums.begin(), nums.begin() + n);
     reverse(nums.begin() + n, nums.end());
 }
+
+# 44ms
+def rotate(nums, k):
+    k = k % len(nums)
+    if k > 0:
+        nums[:k], nums[k:] = nums[-k:], nums[:-k]
