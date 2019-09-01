@@ -25,3 +25,27 @@ string longestCommonPrefix(vector<string>& strs) {
         i++;
     }
 }
+
+# 14ms
+def longestCommonPrefix(strs):
+    if not strs: 
+        return ""
+    str_min = min(strs)
+    str_max = max(strs)
+    for i,x in enumerate(str_min):
+        if x != str_max[i]:
+            return str_max[:i]
+    return str_min
+    
+# 32ms
+def longestCommonPrefix(strs):
+    ret = ""
+    if not strs:
+        return ret
+    for i in range(len(strs[0])):
+        c = strs[0][i]
+        for s in strs:
+            if len(s) - 1 < i or c != s[i]:
+                return ret
+        ret += c
+    return ret
