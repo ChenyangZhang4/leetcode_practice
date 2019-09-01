@@ -24,3 +24,13 @@ int firstUniqChar(string s) {
             return i;
     return -1;
 }
+
+# 144ms
+def firstUniqChar(self, s):
+    hashA = {}
+    for c in s:
+        hashA[c] =  hashA.get(c, 0) + 1
+    for i in range(len(s)):
+        if hashA[s[i]] == 1:
+            return i
+    return -1
