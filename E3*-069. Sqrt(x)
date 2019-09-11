@@ -19,7 +19,7 @@ Explanation: The square root of 8 is 2.82842..., and since
 **********/
 
 //0ms
-//It is true that x_(k+1)=(x_(k) + n/x_(k))/2 larger than truncated sqrt(n) and x_(k) is monotonically decreasing.
+// Newton method. We need a solution of equation f(x): x^2 - a = 0. So the solution x - f(x)/f'(x), equal to (x + a/x) / 2, is an approximation that is closer than x.
 int mySqrt(int x) {
     long r = x/2+1;     //take care of the condition that x is INT_MAX.
     while(r*r>x){
