@@ -27,3 +27,29 @@ vector<vector<int>> subsets(vector<int>& nums) {
     }
     return res;
 }
+
+# 20ms
+def selectN(n, i, nums, ret, sub):
+    if n == 0:
+        ret.append(sub[:])      # Slice is a new object. If not, the value in ret will change when sub changes.
+        return
+    while i + n <= len(nums):
+        sub.append(nums[i])
+        i += 1
+        selectN(n - 1, i, nums, ret, sub)
+        sub.pop()
+def subsets(nums):
+    ret = [[]]
+    sub = []
+    n = 1
+    while n <= len(nums):
+        selectN(n, 0, nums, ret, sub)
+        n += 1
+    return ret
+
+# 50ms
+def subsets(nums):
+    ret = [[]]
+    for x in nums:
+        ret += [sub + [x] for sub in ret]
+    return ret
